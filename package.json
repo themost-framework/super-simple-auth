@@ -1,0 +1,72 @@
+{
+  "name": "express-server-project",
+  "version": "0.1.0",
+  "description": "Express Application with MOST Web Framework",
+  "main": "dist/server/server.js",
+  "repository": "",
+  "private": true,
+  "author": "",
+  "scripts": {
+    "start": "node bin/www.js",
+    "clean": "rimraf dist/server",
+    "build": "rimraf dist/server && babel server --out-dir dist/server --copy-files --source-maps",
+    "themost": "themost",
+    "serve": "nodemon bin/www.js",
+    "debug": "nodemon --inspect-brk bin/www.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "@babel/runtime": "^7.20.7",
+    "@types/express": "^4.17.15",
+    "@types/lodash": "^4.14.191",
+    "@types/passport": "^1.0.0",
+    "eslint": "^8.31.0",
+    "nodemon": "^2.0.20",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@themost/client": "^2.5.6",
+    "@themost/common": "^2.5.12",
+    "@themost/data": "^2.9.0",
+    "@themost/express": "^1.5.24",
+    "@themost/json": "^1.0.1",
+    "@themost/jspa": "^1.2.0",
+    "@themost/node": "^2.5.0",
+    "@themost/query": "^2.9.1",
+    "@themost/sqlite": "^2.6.11",
+    "@themost/xml": "^2.5.2",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
+    "debug": "~4.3.4",
+    "ejs": "~3.1.8",
+    "express": "~4.18.2",
+    "express-session": "^1.17.3",
+    "http-errors": "~2.0.0",
+    "morgan": "~1.10.0",
+    "passport": "^0.6.0",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "modules",
+      "server",
+      "bin"
+    ],
+    "verbose": true,
+    "legacy-watch": true,
+    "execMap": {
+      "js": "node --require @babel/register"
+    },
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js,json"
+  }
+}
