@@ -57,7 +57,7 @@ app.use(dataApplication.middleware());
 // use passport
 app.use(authRouter(passport));
 // use static content
-app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(express.static(path.join(process.cwd(), 'assets')));
 
 app.use('/', indexRouter);
 

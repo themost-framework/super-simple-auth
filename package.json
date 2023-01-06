@@ -7,11 +7,11 @@
   "private": true,
   "author": "",
   "scripts": {
-    "start": "node bin/www.js",
+    "start:production": "node bin/www.js",
     "clean": "rimraf dist/server",
     "build": "rimraf dist/server && babel server --out-dir dist/server --copy-files --source-maps",
     "themost": "themost",
-    "serve": "nodemon bin/www.js",
+    "start": "nodemon bin/www.js",
     "debug": "nodemon --inspect-brk bin/www.js"
   },
   "devDependencies": {
