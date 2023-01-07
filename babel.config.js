@@ -1,7 +1,9 @@
 module.exports = function (api) {
     api.cache(false);
+    api.debug = true;
     return {
-        'sourceMaps': 'inline',
+        'sourceMaps': 'both',
+        'retainLines': true,
         'presets': [
             [
                 '@babel/preset-env',
@@ -10,16 +12,22 @@ module.exports = function (api) {
                         'node': 'current'
                     }
                 }
-            ]
-        ],
-        'plugins': [
-            [
-                '@babel/plugin-proposal-class-properties'
             ],
             [
+                '@babel/preset-typescript'
+            ]
+        ],
+        'exclude': [
+            /node_modules/
+          ],  
+        'plugins': [
+            [
                 '@babel/plugin-proposal-decorators', {
-                    decoratorsBeforeExport: false
+                    version: 'legacy'
                 }
+            ],
+            [
+                '@babel/plugin-proposal-class-properties'
             ]
         ]
     };

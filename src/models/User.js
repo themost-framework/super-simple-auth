@@ -1,4 +1,4 @@
-import { DataContext } from '@themost/data';
+import { DataContext, EdmMapping } from '@themost/data';
 import { CascadeType, Column, Entity, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
 import { Account, AccountType } from './Account';
 
