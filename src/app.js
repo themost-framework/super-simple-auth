@@ -10,6 +10,7 @@ import { ExpressDataApplication, serviceRouter, dateReviver } from '@themost/exp
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import { DataConfigurationStrategy } from '@themost/data';
+import {ViewEngine} from '@themost/ejs';
 import '@themost/json/register';
 /**
  * @name Request#context
@@ -31,6 +32,7 @@ function getApplication() {
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
+  app.engine('ejs', ViewEngine.express());
   app.set('view engine', 'ejs');
 
   app.use(logger('dev'));
