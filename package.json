@@ -10,9 +10,9 @@
     "clean": "rimraf dist",
     "build": "rimraf dist && babel src --out-dir dist --copy-files --source-maps",
     "themost": "themost",
-    "start": "nodemon bin/www.js",
+    "start": "nodemon bin/serve.js",
     "test": "jasmine",
-    "debug": "nodemon --inspect-brk bin/www.js"
+    "debug": "nodemon --inspect-brk bin/serve.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
@@ -71,6 +71,8 @@
       "js": "node --require ./spec/helpers/babel --require ./spec/helpers/module-alias"
     },
     "env": {
+      "PORT": 3000,
+      "DEBUG": "app:*,themost-framework:*",
       "NODE_ENV": "development"
     },
     "ext": "ts,js,json"

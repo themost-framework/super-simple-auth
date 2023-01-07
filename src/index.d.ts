@@ -1,5 +1,2 @@
-import { Application } from 'express';
-
-declare const app: Application;
-
-export = app;
+export * from './utils';
+export * from './app';

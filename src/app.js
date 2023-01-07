@@ -9,6 +9,7 @@ import logger from 'morgan';
 import { ExpressDataApplication, serviceRouter, dateReviver } from '@themost/express';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import { DataConfigurationStrategy } from '@themost/data';
 import '@themost/json/register';
 /**
  * @name Request#context
@@ -21,58 +22,68 @@ import '@themost/json/register';
  * @type {ExpressDataContext}
  */
 
-/**
- * Initialize express application
- * @type {Express}
- */
-let app = express();
+function getApplication() {
+  /**
+   * Initialize express application
+   * @type {Express}
+   */
+  let app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+  app.use(logger('dev'));
 
-app.use(express.json({
-  reviver: dateReviver
-}));
-app.use(express.urlencoded({ extended: false }));
+  app.use(express.json({
+    reviver: dateReviver
+  }));
+  app.use(express.urlencoded({ extended: false }));
 
-// @themost/data data application setup
-const dataApplication = new ExpressDataApplication(path.resolve(__dirname, 'config'));
-// hold data application
-app.set('ExpressDataApplication', dataApplication);
-// use cookie parser
-const secret = dataApplication.getConfiguration().getSourceAt('settings/crypto/key');
-// use cookie parser
-app.use(cookieParser(secret));
+  // @themost/data data application setup
+  const dataApplication = new ExpressDataApplication(path.resolve(__dirname, 'config'));
 
-// use session
-app.use(cookieSession({
-  name: 'session',
-  keys: [secret]
-}));
-// use data middleware (register req.context)
-app.use(dataApplication.middleware());
-// use passport
-app.use(authRouter(passport));
-// use static content
-app.use(express.static(path.join(process.cwd(), 'assets')));
+  // reload configuration
+  dataApplication.getConfiguration().useStrategy(DataConfigurationStrategy, DataConfigurationStrategy);
+          
+  // hold data application
+  app.set('ExpressDataApplication', dataApplication);
+  // use cookie parser
+  const secret = dataApplication.getConfiguration().getSourceAt('settings/crypto/key');
+  // use cookie parser
+  app.use(cookieParser(secret));
 
-app.use('/', indexRouter);
+  // use session
+  app.use(cookieSession({
+    name: 'session',
+    keys: [secret]
+  }));
+  // use data middleware (register req.context)
+  app.use(dataApplication.middleware());
+  // use passport
+  app.use(authRouter(passport));
+  // use static content
+  app.use(express.static(path.join(process.cwd(), 'assets')));
 
-app.use('/users', usersRouter);
-// use @themost/express service router
-app.use('/api', serviceRouter);
+  app.use('/', indexRouter);
 
-// error handler
-app.use((err, req, res) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // render the error page
-  res.status(err.status || err.statusCode || 500);
-  res.render('error');
-});
+  app.use('/users', usersRouter);
+  // use @themost/express service router
+  app.use('/api', serviceRouter);
 
-module.exports = app;
+  // error handler
+  app.use((err, req, res) => {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // render the error page
+    res.status(err.status || err.statusCode || 500);
+    res.render('error');
+  });
+  
+  return app;
+}
+
+export {
+  getApplication
+}

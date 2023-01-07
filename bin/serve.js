@@ -1,5 +1,4 @@
-/* eslint-env node */
-const { serveApplication, getApplication } = require('../dist/index');
+const { serveApplication, getApplication } = require('../src/index');
 const debug = require('debug');
 const error = debug('app:error');
 (async function() {
