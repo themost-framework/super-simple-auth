@@ -19,6 +19,7 @@ class Group extends Account {
         updatable: false,
         type: ColumnType.Integer
     })
+    @Formula(() => AccountType.Group)
     accountType;
 
     @ManyToMany({

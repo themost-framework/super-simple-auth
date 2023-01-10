@@ -1,5 +1,5 @@
 import { DataContext, EdmMapping } from '@themost/data';
-import { CascadeType, Column, Entity, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
+import { CascadeType, Column, ColumnType, Entity, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
 import { Account, AccountType } from './Account';
 
 @Entity()
@@ -13,7 +13,8 @@ class User extends Account {
     @Column({
         nullable: false,
         updatable: false,
-        insertable: true
+        insertable: true,
+        type: ColumnType.Integer
     })
     @Formula(() => AccountType.User)
     accountType;

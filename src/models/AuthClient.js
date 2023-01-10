@@ -1,5 +1,5 @@
 import { DataObject, FunctionContext } from '@themost/data';
-import { CascadeType, Column, ColumnDefault, Embeddable, Entity, FetchType, Formula, Id, ManyToMany, OneToMany, Text } from '@themost/jspa';
+import { CascadeType, Column, ColumnDefault, ElementCollection, CollectionTable, Embeddable, Entity, FetchType, Formula, Id, ManyToMany, OneToMany, Table, Text } from '@themost/jspa';
 
 @Entity()
 @Embeddable()
@@ -33,24 +33,49 @@ class AuthClient extends DataObject {
     })
     name;
 
-    @ManyToMany({
-        type: Text,
-        cascadeType: CascadeType.Remove,
-        fetch: FetchType.Eager
+    @ElementCollection({
+        fetch: FetchType.Lazy,
+        targetClass: Text
+    })
+    @CollectionTable({
+        name: 'AuthClientRedirectUris',
+        joinColumns: [
+            {
+                name: 'client',
+                referencedColumnName: 'client_id'
+            }
+        ]
     })
     redirect_uri;
 
-    @ManyToMany({
-        type: Text,
-        cascadeType: CascadeType.Remove,
-        fetch: FetchType.Eager
+    @ElementCollection({
+        fetch: FetchType.Eager,
+        targetClass: Text
+    })
+    @CollectionTable({
+        name: 'AuthClientGrantTypes',
+        joinColumns: [
+            {
+                name: 'client',
+                referencedColumnName: 'id'
+            }
+        ]
     })
     grantType;
 
-    @ManyToMany({
-        type: Text,
-        cascadeType: CascadeType.Remove,
-        fetch: FetchType.Eager
+    @ElementCollection({
+        fetch: FetchType.Eager,
+        targetClass: Text
+    })
+    @CollectionTable({
+        name: 'AuthClientScopes',
+        joinColumns: [
+            {
+                name: 'client',
+                referencedColumnName: 'id'
+            }
+        ]
+        
     })
     scope;
 

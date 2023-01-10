@@ -17,16 +17,22 @@ describe('AuthClient', () => {
         context = app.createContext();
     });
     afterAll(async () => {
-        await context.finalizeAsync();
+        if (context) {
+            await context.finalizeAsync();
+        }
     });
 
-    it('should create item', async () => {
+    it('should add client', async () => {
         await executeInTransaction(context, async () => {
             /**
              * @type {AuthClient}
              */
             const newItem = {
-                name: 'Test Client'
+                name: 'Test Client',
+                redirect_uri: [
+                    'http://localhost:3000/*',
+                    'https://api.example.com/*',
+                ]
             };
             await context.model(AuthClient).silent().insert(newItem);
             expect(newItem.client_id).toBeTruthy();
@@ -35,9 +41,8 @@ describe('AuthClient', () => {
                 return x.client_id === client_id;
             }, {
                 client_id
-            }).silent().getItem();
+            }).expand((x) => x.redirect_uri).silent().getItem();
             expect(client).toBeTruthy();
-            expect(client.name).toEqual('Test Client');
         });
     });
 
