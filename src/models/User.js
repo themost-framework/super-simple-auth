@@ -1,6 +1,7 @@
 import { DataContext, EdmMapping } from '@themost/data';
-import { CascadeType, Column, ColumnType, Entity, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
+import { CascadeType, Column, ColumnType, Entity, Id, Text, ColumnDefault, Embeddable, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
 import { Account, AccountType } from './Account';
+import { DataObject } from '@themost/data';
 
 @Entity()
 @EntityListeners()
@@ -76,6 +77,57 @@ class User extends Account {
 
 }
 
+@Entity()
+@Embeddable()
+class UserCredential extends DataObject {
+    
+    @Id()
+    id;
+
+    @Column({
+        type: User,
+        unique: true
+    })
+    user;
+
+    @Column({
+        type: Text,
+        length: 512,
+        nullable: false
+    })
+    userPassword;
+
+    @Column({
+        type: ColumnType.Boolean
+    })
+    @ColumnDefault(() => true)
+    userActivated;
+
+    @Column({
+        type: ColumnType.DateTime
+    })
+    badPasswordTime;
+
+    @Column({
+        type: ColumnType.Integer
+    })
+    @ColumnDefault(() => 0)
+    badPasswordCount;
+
+    @Column({
+        type: ColumnType.DateTime
+    })
+    expirationDate;
+
+    @Column({
+        type: ColumnType.Boolean
+    })
+    @ColumnDefault(() => false)
+    pwdLastSet;
+
+}
+
 export {
-    User
+    User,
+    UserCredential
 }

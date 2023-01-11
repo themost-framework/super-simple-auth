@@ -1,5 +1,5 @@
 import { DataObject, FunctionContext } from '@themost/data';
-import { CascadeType, Column, ColumnDefault, ElementCollection, CollectionTable, Embeddable, Entity, FetchType, Formula, Id, ManyToMany, OneToMany, Table, Text } from '@themost/jspa';
+import { Column, ElementCollection, CollectionTable, Embeddable, Entity, FetchType, Formula, Id, Text, Permission } from '@themost/jspa';
 
 @Entity()
 @Embeddable()
@@ -8,7 +8,7 @@ class AuthClient extends DataObject {
     constructor() {
         super();
     }
-
+    
     @Column({
         type: Text,
         length: 16,
@@ -31,7 +31,7 @@ class AuthClient extends DataObject {
         type: Text,
         nullable: false
     })
-    name;
+    description;
 
     @ElementCollection({
         fetch: FetchType.Lazy,
@@ -78,6 +78,42 @@ class AuthClient extends DataObject {
         
     })
     scope;
+
+}
+
+@Entity()
+@Embeddable()
+@Permission([
+    {
+        mask: 15,
+        type: 'global'
+    },
+    {
+        mask: 15,
+        account: 'Administrators',
+        type: 'global'
+    }
+])
+class AuthClientCredential extends DataObject {
+    
+    @Id()
+    id;
+
+    @Column({
+        type: AuthClient,
+        nullable: false,
+        unique: true,
+        insertable: true,
+        updatable: false
+    })
+    client_id;
+
+    @Column({
+        type: Text,
+        length: 512,
+        nullable: false
+    })
+    client_secret;
 
 }
 

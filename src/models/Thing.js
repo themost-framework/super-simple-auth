@@ -1,5 +1,5 @@
 import { DataObject } from '@themost/data';
-import { Column, Entity, GeneratedValue, GenerationType, Id, Table, Counter, Basic, Formula, ManyToOne, FetchType, ColumnDefault, ColumnType, Embeddable } from '@themost/jspa';
+import { Column, Entity, GeneratedValue, GenerationType, Id, Table, Text, Formula, ManyToOne, FetchType, ColumnDefault, ColumnType, Embeddable } from '@themost/jspa';
 
 @Entity()
 @Table()
@@ -11,55 +11,49 @@ class Thing extends DataObject {
     }
 
     @Id()
-    @Column({
-        type: ColumnType.Counter
-    })
-    @GeneratedValue({
-        strategy: GenerationType.Identity
-    })
     id;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     name;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     alternateName;
 
     @Column({
-        type: ColumnType.Text,
+        type: Text
+    })
+    description;
+
+    @Column({
+        type: Text,
         updatable: false
     })
     @Formula((event) => {
         return event.model.name;
     })
-    description;
-
-    @Column({
-        type: ColumnType.Text
-    })
     additionalType;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     sameAs;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     url;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     identifier;
 
     @Column({
-        type: ColumnType.Text
+        type: Text
     })
     image;
 
