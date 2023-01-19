@@ -55,19 +55,21 @@
     "morgan": "~1.10.0",
     "passport": "^0.6.0",
     "passport-http": "^0.3.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "sass": "^1.57.1"
   },
   "nodemonConfig": {
     "watch": [
       "modules",
       "src",
       "bin",
-      "spec"
+      "spec",
+      "assets/stylesheets/**/*.scss"
     ],
     "verbose": true,
     "legacy-watch": true,
     "execMap": {
-      "js": "node --require ./spec/helpers/babel --require ./spec/helpers/module-alias"
+      "js": "node --require ./src/sass --require ./spec/helpers/babel --require ./spec/helpers/module-alias"
     },
     "env": {
       "PORT": 3000,
