@@ -81,15 +81,11 @@ class Thing extends DataObject {
         fetchType: FetchType.Lazy
     })
     @Formula((event) => {
-        const context = event.context;
-        let user = context.interactiveUser;
+        const user = event.context && (event.context.interactiveUser || event.context.user);
         if (user && user.name) {
-            return {
-                name: user.name
-            };
-        }
-        user = context.user;
-        if (user && user.name) {
+            if (user.name === 'anonymous') {
+                return null;
+            }
             return {
                 name: user.name
             };
@@ -106,15 +102,11 @@ class Thing extends DataObject {
         fetchType: FetchType.Lazy
     })
     @Formula((event) => {
-        const context = event.context;
-        let user = context.interactiveUser;
+        const user = event.context && (event.context.interactiveUser || event.context.user);
         if (user && user.name) {
-            return {
-                name: user.name
-            };
-        }
-        user = context.user;
-        if (user && user.name) {
+            if (user.name === 'anonymous') {
+                return null;
+            }
             return {
                 name: user.name
             };

@@ -60,7 +60,7 @@
   "nodemonConfig": {
     "watch": [
       "modules",
-      "server",
+      "src",
       "bin",
       "spec"
     ],

@@ -20,6 +20,13 @@ class User extends Account {
     @Formula(() => AccountType.User)
     accountType;
 
+    @Column({
+        nullable: false,
+        type: Boolean
+    })
+    @ColumnDefault(() => true)
+    enabled;
+
     @ManyToMany({
         targetEntity: 'Group',
         cascadeType: CascadeType.Detach,

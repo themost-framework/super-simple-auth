@@ -1,7 +1,6 @@
 import express from 'express';
 import {Strategy as LocalStrategy} from 'passport-local';
-import crypto from 'crypto';
-import {HttpForbiddenError} from '@themost/common';
+import { Authenticator } from '../services/Authenticator';
 
 /**
  * @param {passport.PassportStatic} passport
@@ -9,39 +8,13 @@ import {HttpForbiddenError} from '@themost/common';
 function authRouter(passport) {
     // local strategy example
     passport.use(new LocalStrategy({
-            usernameField: 'username',
-            passwordField: 'password',
             session: false,
             passReqToCallback: true
         },
         function(req, username, password, done) {
-            // query users by name
-            return req.context.model('User').where('name').equal(username)
-                .silent()
-                .getItem().then(user => {
-                    // if user cannot be found
-                    if (user == null) {
-                        return done(null, false);
-                    }
-                    // query user credentials by user identifier and password
-                    return req.context.model('UserCredential')
-                        .where('id').equal(user.id).prepare()
-                        .and('userPassword').equal(`{clear}${password}`)
-                        .or('userPassword').equal(`'{md5}'${crypto.createHash('md5').update(password).digest('hex')}`)
-                        .or('userPassword').equal(`'{sha1}'${crypto.createHash('sha1').update(password).digest('hex')}`)
-                        .silent()
-                        .count().then( exists => {
-                            // if ser password is correct
-                            if (exists) {
-                                // validate that user is enabled
-                                if (!user.enabled) {
-                                    return done(new HttpForbiddenError('User account is disabled'));
-                                }
-                                // return user
-                                return done(null, user);
-                            }
-                            return done(null, false);
-                        });
+            const authenticator = req.context.application.getService(Authenticator);
+            return authenticator.validateUser(req.context, username, password).then(user => {
+                    return done(null, user);
                 }).catch( err => {
                     return done(err);
                 });
@@ -86,7 +59,6 @@ function authRouter(passport) {
         function(req, res) {
             res.redirect('/');
         });
-
     return router;
 }
 

@@ -8,10 +8,10 @@ import authRouter from './routes/auth';
 import logger from 'morgan';
 import { ExpressDataApplication, serviceRouter, dateReviver } from '@themost/express';
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
 import { DataConfigurationStrategy } from '@themost/data';
 import {ViewEngine} from '@themost/ejs';
 import '@themost/json/register';
+import { Authenticator } from './services/Authenticator';
 /**
  * @name Request#context
  * @description Gets an instance of ExpressDataContext class which is going to be used for data operations
@@ -47,6 +47,11 @@ function getApplication() {
 
   // reload configuration
   dataApplication.getConfiguration().useStrategy(DataConfigurationStrategy, DataConfigurationStrategy);
+
+  // use default authenticator
+  if (dataApplication.hasService(Authenticator) === false) {
+    dataApplication.useService(Authenticator);
+  }
           
   // hold data application
   app.set('ExpressDataApplication', dataApplication);
@@ -68,8 +73,6 @@ function getApplication() {
   app.use(express.static(path.join(process.cwd(), 'assets')));
 
   app.use('/', indexRouter);
-
-  app.use('/users', usersRouter);
   // use @themost/express service router
   app.use('/api', serviceRouter);
 
