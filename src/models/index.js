@@ -7,3 +7,7 @@ export * from './Intangible';
 export * from './StructuredValue';
 export * from './Permission';
 export * from './AuthClient';
+export * from './AuthScope';
+export * from './AccessToken';
+export * from './ActionStatusType';
+export * from './Action';

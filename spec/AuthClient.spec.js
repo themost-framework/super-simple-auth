@@ -29,6 +29,7 @@ describe('AuthClient', () => {
              */
             const newItem = {
                 name: 'Test Client',
+                description: 'Test Client Application',
                 redirect_uri: [
                     'http://localhost:3000/*',
                     'https://api.example.com/*',

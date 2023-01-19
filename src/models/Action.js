@@ -1,4 +1,4 @@
-import { Column, Entity } from '@themost/jspa';
+import { Column, Entity, Text, Formula } from '@themost/jspa';
 import { DateTime } from '@themost/jspa';
 import { ActionStatusType } from './ActionStatusType';
 import { Thing } from './Thing';
@@ -6,7 +6,7 @@ import { FunctionContext } from '@themost/data';
 
 
 @Entity()
-export class Action extends Thing {
+class Action extends Thing {
     
     @Column({
         type: Thing

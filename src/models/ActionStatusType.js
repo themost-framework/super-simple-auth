@@ -1,4 +1,4 @@
-import { Entity } from '@themost/jspa';
+import { Entity, Inheritance, InheritanceType, Permission, PostInit } from '@themost/jspa';
 import { Enumeration } from './Enumeration';
 
 const ActionStatusTypes = [
@@ -55,7 +55,7 @@ const ActionStatusTypes = [
         type: 'global'
     }
 ])
-export class ActionStatusType extends Enumeration {
+class ActionStatusType extends Enumeration {
     @PostInit()
     async onPostInit(event) {
         const count = await event.model.asQueryable().silent().count();
