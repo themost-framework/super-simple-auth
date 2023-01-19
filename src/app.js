@@ -12,6 +12,7 @@ import { DataConfigurationStrategy } from '@themost/data';
 import {ViewEngine} from '@themost/ejs';
 import '@themost/json/register';
 import { Authenticator } from './services/Authenticator';
+import {sassMiddleware} from './sass';
 /**
  * @name Request#context
  * @description Gets an instance of ExpressDataContext class which is going to be used for data operations
@@ -77,12 +78,13 @@ function getApplication() {
   app.use('/api', serviceRouter);
 
   // error handler
-  app.use((err, req, res) => {
+  app.use((err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
+    const status = err.status || err.statusCode || 500;
     // render the error page
-    res.status(err.status || err.statusCode || 500);
+    res.status(status);
     res.render('error');
   });
   

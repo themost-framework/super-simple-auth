@@ -1,31 +1,90 @@
+#error {
+  position: relative;
+  height: 100vh;
+}
+#error .error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  max-width: 767px;
+  width: 100%;
+  line-height: 1.4;
+  padding: 0px 15px;
+}
+#error .error h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+#error .error p {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+}
+#error .error pre {
+  white-space: inherit;
+  text-align: left;
+}
+#error .error .error-any {
+  position: relative;
+  height: 150px;
+  line-height: 150px;
+  margin-bottom: 25px;
+}
+#error .error .error-any h1 {
+  font-size: 186px;
+  font-weight: 900;
+  margin: 0px;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 767px) {
+  .error .error-any {
+    height: 110px;
+    line-height: 110px;
+  }
+  .error .error-any h1 {
+    font-size: 120px;
+  }
+}
 body {
-  padding-top: 54px; }
+  padding-top: 54px;
+}
 
 @media (min-width: 992px) {
   body {
-    padding-top: 56px; } }
-
+    padding-top: 56px;
+  }
+}
 .empty {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #fdfdfd; }
+  background-color: #fdfdfd;
+}
 
 .form-login {
   max-width: 330px;
   padding: 15px;
-  margin: 20vh auto; }
-  .form-login .form-login-heading {
-    margin-bottom: 20px; }
-  .form-login .checkbox {
-    font-weight: normal; }
-  .form-login .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px; }
-    .form-login .form-control:focus {
-      z-index: 2; }
-
-/*# sourceMappingURL=style.css.map */
+  margin: 20vh auto;
+}
+.form-login .form-login-heading {
+  margin-bottom: 20px;
+}
+.form-login .checkbox {
+  font-weight: normal;
+}
+.form-login .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-login .form-control:focus {
+  z-index: 2;
+}
