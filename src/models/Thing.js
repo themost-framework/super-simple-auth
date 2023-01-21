@@ -3,7 +3,6 @@ import { Column, Entity, GeneratedValue, GenerationType, Id, Table, Text, Formul
 
 @Entity()
 @Table()
-@Embeddable()
 class Thing extends DataObject {
 
     constructor() {

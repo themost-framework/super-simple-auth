@@ -1,3 +1,4 @@
+import { EdmMapping } from '@themost/data';
 import { Entity, Inheritance, InheritanceType, Permission, PostInit } from '@themost/jspa';
 import { Enumeration } from './Enumeration';
 
@@ -41,6 +42,7 @@ const ActionStatusTypes = [
 ]
 
 @Entity()
+@EdmMapping.entityType()
 @Inheritance({
     strategy: InheritanceType.TablePerClass
 })

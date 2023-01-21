@@ -10,8 +10,10 @@ import {
     PostInit
 } from '@themost/jspa';
 import { Account, AccountType } from './Account';
+import { EdmMapping } from '@themost/data';
 
 @Entity()
+@EdmMapping.entityType()
 class Group extends Account {
     @Formula(() => AccountType.Group)
     @Column({

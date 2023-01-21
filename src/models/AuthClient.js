@@ -2,7 +2,6 @@ import { DataObject, FunctionContext } from '@themost/data';
 import { Column, ElementCollection, CollectionTable, Embeddable, Entity, FetchType, Formula, Id, Text, Permission } from '@themost/jspa';
 
 @Entity()
-@Embeddable()
 class AuthClient extends DataObject {
 
     constructor() {

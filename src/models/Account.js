@@ -1,3 +1,4 @@
+import { EdmMapping } from '@themost/data';
 import {  Column, ColumnType, Entity, Table } from '@themost/jspa';
 import { Thing } from './Thing';
 
@@ -7,6 +8,7 @@ const AccountType = {
 }
 
 @Entity()
+@EdmMapping.entityType()
 @Table({
     indexes: [
         {

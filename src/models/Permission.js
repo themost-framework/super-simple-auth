@@ -4,7 +4,6 @@ import { User } from './User';
 import { Workspace } from './Workspace';
 
 @Entity()
-@Embeddable()
 class Permission {
     @Id()
     @Column({

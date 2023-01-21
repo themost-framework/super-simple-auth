@@ -51,7 +51,7 @@ class Authenticator extends ApplicationService {
         }, {
             username: username,
             clearText: `{clear}${password}`,
-            md5Text: `${md5}${crypto.createHash('md5').update(password).digest('hex')}`,
+            md5Text: `{md5}${crypto.createHash('md5').update(password).digest('hex')}`,
             sha1Text: `{sha1}${crypto.createHash('sha1').update(password).digest('hex')}`
         }).silent().count();
         if (!valid) {

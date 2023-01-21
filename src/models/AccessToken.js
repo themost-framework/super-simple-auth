@@ -3,7 +3,6 @@ import { DataObject, FunctionContext } from '@themost/data';
 import { Column, Embeddable, Entity, Formula, Id, Text, ColumnType, ColumnDefault } from '@themost/jspa';
 
 @Entity()
-@Embeddable()
 class AccessToken extends DataObject {
     constructor() {
         super();

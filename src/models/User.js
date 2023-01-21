@@ -2,9 +2,11 @@ import { DataContext, EdmMapping } from '@themost/data';
 import { CascadeType, Column, ColumnType, Entity, Id, Text, ColumnDefault, Embeddable, EntityListeners, FetchType, Formula, JoinTable, ManyToMany, OneToOne, PostInit, PostInitEvent, PostLoad } from '@themost/jspa';
 import { Account, AccountType } from './Account';
 import { DataObject } from '@themost/data';
+import crypto from 'crypto';
 
 @Entity()
 @EntityListeners()
+@EdmMapping.entityType()
 class User extends Account {
     
     constructor() {
@@ -82,6 +84,19 @@ class User extends Account {
         }).getTypedItem();
     }
 
+    async setPassword(newPassword) {
+        const userPassword = `{md5}${crypto.createHash('md5').update(newPassword).digest('hex')}`;
+        const user = this.id;
+        const badPasswordCount = 0;
+        const badPasswordTime = null;
+        await this.context.model(UserCredential).silent(this.getModel().isSilent()).save({
+            user,
+            userPassword,
+            badPasswordCount,
+            badPasswordTime
+        });
+    }
+
 }
 
 @Entity()
@@ -131,6 +146,7 @@ class UserCredential extends DataObject {
     })
     @ColumnDefault(() => false)
     pwdLastSet;
+
 
 }
 

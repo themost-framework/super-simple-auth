@@ -2,7 +2,6 @@ import { DataObject } from '@themost/data';
 import { Counter, Column, Embeddable, Entity, Id, Text, Permission } from '@themost/jspa';
 
 @Entity()
-@Embeddable()
 @Permission([
     {
         mask: 15,

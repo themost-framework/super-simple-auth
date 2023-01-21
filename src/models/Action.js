@@ -49,6 +49,11 @@ class Action extends Thing {
     instrument;
 
     @Column({
+        type: Object
+    })
+    object;
+
+    @Column({
         type: Thing
     })
     error;
