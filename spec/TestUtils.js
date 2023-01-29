@@ -1,3 +1,8 @@
+import { DataConfigurationStrategy } from "@themost/data";
+import { ExpressDataApplication } from "@themost/express";
+import { SqliteAdapter } from "@themost/sqlite";
+import { getApplication } from "../src";
+
 class CancelTransactionError extends Error {
     constructor() {
         super();
@@ -66,8 +71,45 @@ async function finalizeApplication(app) {
     }
 }
 
+function getTestApplication() {
+    const container = getApplication();
+    /**
+     * @type {import('@themost/express').ExpressDataApplication}
+     */
+    const app = container.get(ExpressDataApplication.name);
+    /**
+     * @type {Array<any>}
+     */
+    const adapters = app.getConfiguration().getSourceAt('adapters');
+    adapters.unshift(
+        {
+            "name": "test",
+            "invariantName": "sqlite",
+            "default": true,
+            "options": {
+                "database": ":memory:"
+            }
+        }
+    );
+    // reload configurarion
+    app.getConfiguration().useStrategy(DataConfigurationStrategy, DataConfigurationStrategy);
+    return container;
+}
+
+/**
+ * @param {import('@themost/express').ExpressDataApplication} app 
+ */
+function cleanupApplication(app) {
+    // clear application cache
+    const configuration = app.getConfiguration();
+    delete configuration.cache;
+    delete SqliteAdapter.supportMigrations;
+}
+
 export {
     executeInTransaction,
     cancelTransaction,
-    finalizeApplication
+    finalizeApplication,
+    getTestApplication,
+    cleanupApplication
 }

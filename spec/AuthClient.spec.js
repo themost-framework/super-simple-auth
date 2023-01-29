@@ -1,8 +1,9 @@
 import { ExpressDataApplication } from '@themost/express';
-import { getApplication } from '../src';
+import { AuthScope } from '../src/models';
 import { AuthClient } from '../src/models/AuthClient';
-import { executeInTransaction } from './TestUtils';
+import { executeInTransaction, getTestApplication, cleanupApplication } from './TestUtils';
 describe('AuthClient', () => {
+    
     /**
      * @type {import("@themost/express").ExpressDataApplication}
      */
@@ -12,11 +13,17 @@ describe('AuthClient', () => {
      */
     let context;
     beforeAll(() => {
-        const container = getApplication();
+        const container = getTestApplication();
         app = container.get(ExpressDataApplication.name);
-        context = app.createContext();
     });
     afterAll(async () => {
+        //
+    });
+    beforeEach(() => {
+        context = app.createContext();
+    });
+    afterEach(async () => {
+        cleanupApplication(app);
         if (context) {
             await context.finalizeAsync();
         }
@@ -44,6 +51,14 @@ describe('AuthClient', () => {
                 client_id
             }).expand((x) => x.redirect_uri).silent().getItem();
             expect(client).toBeTruthy();
+        });
+    });
+
+    it('should get scopes', async () => {
+        await executeInTransaction(context, async () => {
+            const scopes = await context.model(AuthScope).asQueryable().silent().getItems();
+            expect(scopes).toBeInstanceOf(Array);
+            expect(scopes.length).toBeGreaterThan(0);
         });
     });
 

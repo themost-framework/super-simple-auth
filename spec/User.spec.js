@@ -1,11 +1,10 @@
 import { ExpressDataApplication } from '@themost/express';
-import { getApplication } from '../src';
-import { User, UserCredential } from '../src/models/User';
-import { executeInTransaction } from './TestUtils';
-import crypto from 'crypto';
+import { User } from '../src/models/User';
+import { executeInTransaction, getTestApplication, cleanupApplication, cleanupContext } from './TestUtils';
 import { Authenticator } from '../src/services/Authenticator';
 
 describe('AuthClient', () => {
+    
     /**
      * @type {import("@themost/express").ExpressDataApplication}
      */
@@ -15,11 +14,17 @@ describe('AuthClient', () => {
      */
     let context;
     beforeAll(() => {
-        const container = getApplication();
+        const container = getTestApplication();
         app = container.get(ExpressDataApplication.name);
-        context = app.createContext();
     });
     afterAll(async () => {
+        //
+    });
+    beforeEach(() => {
+        context = app.createContext();
+    });
+    afterEach(async () => {
+        cleanupApplication(app);
         if (context) {
             await context.finalizeAsync();
         }
@@ -72,7 +77,7 @@ describe('AuthClient', () => {
                 .where((x) => x.name === 'alexis.rees@example.com')
                 .expand((x) => x.groups)
                 .silent().getTypedItem();
-            await user.silent(true).setPassword('secret');
+            await user.silent().setPassword('secret');
   
             await expectAsync(context.application.getService(Authenticator).validateUser(
                 context, 'alexis.rees@example.com', 'invalid'

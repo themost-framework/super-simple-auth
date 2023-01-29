@@ -74,9 +74,23 @@ class AuthClient extends DataObject {
                 referencedColumnName: 'id'
             }
         ]
-        
     })
     scope;
+
+    @ElementCollection({
+        fetch: FetchType.Eager,
+        targetClass: Text
+    })
+    @CollectionTable({
+        name: 'AuthClientOptionalScopes',
+        joinColumns: [
+            {
+                name: 'client',
+                referencedColumnName: 'id'
+            }
+        ]
+    })
+    optionalScope;
 
 }
 

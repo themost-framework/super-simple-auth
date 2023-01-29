@@ -14,3 +14,6 @@ export * from './ActionStatusType';
 export * from './Action';
 export * from './UpdateAction';
 export * from './ResetPasswordAction';
+export * from './ContactPoint';
+export * from './PostalAddress';
+export * from './Party';

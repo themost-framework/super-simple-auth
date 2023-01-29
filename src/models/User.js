@@ -3,6 +3,8 @@ import { CascadeType, Column, ColumnType, Entity, Id, Text, ColumnDefault, Embed
 import { Account, AccountType } from './Account';
 import { DataObject } from '@themost/data';
 import crypto from 'crypto';
+import { Person } from './Person';
+import passwordValidator from 'password-validator';
 
 @Entity()
 @EntityListeners()
@@ -51,6 +53,11 @@ class User extends Account {
     })
     groups;
 
+    @Column({
+        type: Person
+    })
+    profile;
+
     // noinspection JSUnusedLocalSymbols
     @PostInit()
     async onPostInit(event) {
@@ -85,6 +92,7 @@ class User extends Account {
     }
 
     async setPassword(newPassword) {
+        
         const userPassword = `{md5}${crypto.createHash('md5').update(newPassword).digest('hex')}`;
         const user = this.id;
         const badPasswordCount = 0;
