@@ -1,0 +1,37 @@
+{
+    "settings": {
+        "crypto": {
+            "algorithm": "sha256",
+            "key": "210aa8e2eed13ce1bebd0b549ea5721eccb0b46a45f96394ed87ea03d9b5436234a9597ae13b5a863e73affd5cda8b7a"
+        },
+        "auth": {
+            "name": ".MAUTH",
+            "timeout": 480,
+            "slidingExpiration": false,
+            "unattendedExecutionAccount": "vK3U2CM4WlGWwACU"
+        },
+        "i18n": {
+            "locales": [
+                "en"
+            ],
+            "defaultLocale": "en"
+        }
+    },
+    "adapterTypes": [
+        {
+            "name": "SQLite Data Adapter",
+            "invariantName": "sqlite",
+            "type": "@themost/sqlite"
+        }
+    ],
+    "adapters": [
+        {
+            "name": "development",
+            "invariantName": "sqlite",
+            "default": true,
+            "options": {
+                "database": "db/local.db"
+            }
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+<% layout('empty') %>
+<div id="error">
+    <div class="error">
+        <div class="error-any">
+            <h1><%= error.status || 500 %></h1>
+        </div>
+        <h2 class="mt-1">Oops! Something went wrong</h2>
+        <p><%= error.message %></p>
+        <% if (process.env.NODE_ENV === 'development' && error.stack) { %>
+            <pre class="border-0 mt-3">
+                <small><%= error.stack %></small>
+            </pre>    
+        <% } %>
+        <a class="btn btn-primary text-uppercase" href="/">Home</a>
+    </div>
+</div>
