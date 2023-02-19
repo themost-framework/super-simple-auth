@@ -41,7 +41,7 @@
     "@themost/json": "^1.0.1",
     "@themost/jspa": "^1.2.2",
     "@themost/node": "^2.5.0",
-    "@themost/query": "^2.9.1",
+    "@themost/query": "^2.9.7",
     "@themost/sqlite": "^2.6.12",
     "@themost/xml": "^2.5.2",
     "cookie-parser": "^1.4.6",
