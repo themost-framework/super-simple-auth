@@ -1,7 +1,7 @@
 {
   "name": "@themost/super-simple-auth",
   "version": "0.1.0",
-  "description": "Express Application with MOST Web Framework",
+  "description": "OAuth2 server based on @themost-framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": true,
